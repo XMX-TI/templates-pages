@@ -73,7 +73,7 @@
     <link rel="dns-prefetch" href="https://images.converteai.net" />
     <link rel="dns-prefetch" href="https://license.vturb.com" />
     
-    <link rel="dns-prefetch" href="https://www.clarity.ms" />
+    
 
     <!-- 10. Font — self-hosted, same origin, display:optional (zero CLS)
          Was: 2 preconnects + a Google Fonts stylesheet round-trip
@@ -117,33 +117,7 @@
           i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now());
       })(window, performance);
     </script>
-    <script>
-      /* Microsoft Clarity — queue stub now, network request after load.
-         The stub keeps clarity() calls working from the first byte; the tag
-         itself is fetched once the page is interactive so neither its transfer
-         nor its parse lands inside the FCP / TBT window. */
-      (function (c, a, i) {
-        c[a] =
-          c[a] ||
-          function () {
-            (c[a].q = c[a].q || []).push(arguments);
-          };
-        function load() {
-          var t = document.createElement("script");
-          t.async = 1;
-          t.src = "https://www.clarity.ms/tag/" + i;
-          document.head.appendChild(t);
-        }
-        function schedule() {
-          if (c.requestIdleCallback)
-            c.requestIdleCallback(load, { timeout: 3000 });
-          else setTimeout(load, 1200);
-        }
-        if (document.readyState === "complete") schedule();
-        else c.addEventListener("load", schedule, { once: true });
-      })(window, "clarity", "y0raqp283t");
-    </script>
-
+   
     <!-- 13. BFCache prevention — not needed here -->
 
     <!-- 14. Critical CSS (mobile-first, above the fold only) -->
