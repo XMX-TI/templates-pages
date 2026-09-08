@@ -1,0 +1,9 @@
+// _mobile.scss
+// Estilos base são para mobile (até 900px).
+// Use @include desktop para aplicar estilos acima disso.
+
+@mixin desktop {
+  @media (min-width: 901px) {
+    @content;
+  }
+}

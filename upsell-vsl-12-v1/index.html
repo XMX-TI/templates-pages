@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 1. Charset (must stay inside the first 1024 bytes) -->
+    <meta charset="utf-8" />
+
+    <!-- 2. Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- 3. GTM inline snippet — none on this page -->
+
+    <!-- 5. Title / description / robots -->
+    <title>Glyco Barrier — Your Order Is Not Complete Yet</title>
+    <meta
+      name="description"
+      content="Complete your Glyco Barrier order and review this important message before your shipment is finalized."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0f2e27" />
+
+    <!-- 6. Open Graph / Twitter Card -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Glyco Barrier" />
+    <meta
+      property="og:title"
+      content="Glyco Barrier — Your Order Is Not Complete Yet"
+    />
+    <meta
+      property="og:description"
+      content="Complete your Glyco Barrier order and review this important message before your shipment is finalized."
+    />
+    <meta property="og:url" content="https://glycobarrier.com/fa-fe6-gb/" />
+    <meta
+      property="og:image"
+      content="https://glycobarrier.com/fa-fe6-gb/assets/img/12.png"
+    />
+    <meta property="og:image:width" content="780" />
+    <meta property="og:image:height" content="633" />
+    <meta property="og:image:alt" content="12 bottles of Glyco Barrier" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Glyco Barrier — Your Order Is Not Complete Yet"
+    />
+    <meta
+      name="twitter:description"
+      content="Complete your Glyco Barrier order and review this important message before your shipment is finalized."
+    />
+    <meta
+      name="twitter:image"
+      content="https://glycobarrier.com/fa-fe6-gb/assets/img/12.png"
+    />
+
+    <!-- 7. Favicons -->
+    <link
+      rel="icon"
+      href="assets/img/favicon-64.png"
+      type="image/png"
+      sizes="64x64"
+    />
+    <link rel="apple-touch-icon" href="assets/img/favicon.png" />
+
+    <!-- 8. Canonical -->
+    <link rel="canonical" href="https://glycobarrier.com/fa-fe6-gb/" />
+
+    <!-- 9. Preconnects / DNS hints
+         fonts.googleapis.com / fonts.gstatic.com removed: Montserrat is now
+         self-hosted, so those two TLS handshakes no longer sit in the
+         critical window. -->
+    <link rel="preconnect" href="https://scripts.converteai.net" crossorigin />
+    <link rel="preconnect" href="https://cdn.converteai.net" crossorigin />
+    <link rel="dns-prefetch" href="https://images.converteai.net" />
+    <link rel="dns-prefetch" href="https://license.vturb.com" />
+    <link rel="dns-prefetch" href="https://glyco-barrier.mycartpanda.com" />
+    <link rel="dns-prefetch" href="https://www.clarity.ms" />
+
+    <!-- 10. Font — self-hosted, same origin, display:optional (zero CLS)
+         Was: 2 preconnects + a Google Fonts stylesheet round-trip
+         (HTML -> fonts.googleapis.com CSS -> fonts.gstatic.com woff2).
+         Now: one same-origin 38 KB woff2 on the connection that is already
+         open, so it lands inside the `optional` window instead of missing it. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="assets/fonts/montserrat-latin-var.woff2"
+      crossorigin
+    />
+
+    <!-- LCP-area image: above the fold, fetched at high priority -->
+    <link
+      rel="preload"
+      as="image"
+      href="assets/img/secure-3-1-4.webp"
+      type="image/webp"
+      fetchpriority="high"
+    />
+
+    <!-- 11. Third-party scripts
+         The two `preload as="script"` hints for player.js + smartplayer.js were
+         removed. smartplayer.js is 286 KB and `preload` fetches it at High
+         priority, in parallel with the document: on Lighthouse slow-4G
+         (~200 KB/s) that is ~1.4 s of bandwidth taken from the HTML before the
+         first paint, which is what pushed FCP to 2.4 s. The player is now
+         injected after the first paint (see the boot script at the end of the
+         head), so it costs nothing before FCP. -->
+
+    <!-- First-party page logic: parsed off the main thread, runs after parsing -->
+    <script defer src="assets/js/app.js"></script>
+
+    <!-- 12. Performance timing + analytics (inline) -->
+    <script>
+      /* VTurb player timing origin */
+      !(function (i, n) {
+        i._plt =
+          i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now());
+      })(window, performance);
+    </script>
+    <script>
+      /* Microsoft Clarity — queue stub now, network request after load.
+         The stub keeps clarity() calls working from the first byte; the tag
+         itself is fetched once the page is interactive so neither its transfer
+         nor its parse lands inside the FCP / TBT window. */
+      (function (c, a, i) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        function load() {
+          var t = document.createElement("script");
+          t.async = 1;
+          t.src = "https://www.clarity.ms/tag/" + i;
+          document.head.appendChild(t);
+        }
+        function schedule() {
+          if (c.requestIdleCallback)
+            c.requestIdleCallback(load, { timeout: 3000 });
+          else setTimeout(load, 1200);
+        }
+        if (document.readyState === "complete") schedule();
+        else c.addEventListener("load", schedule, { once: true });
+      })(window, "clarity", "y0raqp283t");
+    </script>
+
+    <!-- 13. BFCache prevention — not needed here -->
+
+    <!-- 14. Critical CSS (mobile-first, above the fold only) -->
+    <style>
+      @font-face {
+        font-family: Montserrat;
+        font-style: normal;
+        font-weight: 400 900;
+        font-display: optional;
+        src: url(assets/fonts/montserrat-latin-var.woff2) format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+          U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+          U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      body {
+        background: #fff;
+        color: #111;
+        font-family:
+          Montserrat, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        overflow-x: hidden;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      img {
+        height: auto;
+        object-fit: contain;
+      }
+      picture {
+        display: contents;
+      }
+      a {
+        color: inherit;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      [data-delay] {
+        display: none;
+      }
+      .container {
+        width: 95%;
+        max-width: 1140px;
+        margin: 0 auto;
+      }
+      .warning-bar {
+        background: linear-gradient(
+          90deg,
+          #0f2e27 0%,
+          #20594d 74.09%,
+          #0f2e27 99.52%
+        );
+        padding: 22px 0;
+        text-align: center;
+      }
+      .warning-bar .container {
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+        align-items: flex-start;
+      }
+      .warning-bar .warning-icon {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+      }
+      .warning-bar p,
+      .warning-bar strong {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        max-width: 60ch;
+        line-height: 1;
+      }
+      .warning-bar strong {
+        font-weight: 800;
+      }
+      .warning-bar .wn {
+        color: #ffdc17;
+      }
+      .header {
+        padding: 10px 0;
+      }
+      .header .container {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .header .secure-badges {
+        max-width: 120px;
+      }
+      .step-bar {
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+      .step-bar .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        max-width: 1320px;
+        list-style: none;
+      }
+      .step-bar .step {
+        flex: 1;
+        text-align: center;
+        background: #20594d;
+        color: #fff;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .step-bar .step:first-child {
+        text-align: left;
+      }
+      .step-bar .step:last-child {
+        text-align: right;
+        font-size: 12px;
+      }
+      .step-bar .step.active {
+        background: #0f2e27;
+        color: #ffdc17;
+        font-size: 18px;
+        padding: 14px 8px;
+        margin: 0 -2px;
+        border-radius: 4px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .main-content {
+        padding: 0 0 40px;
+      }
+      .main-content .card {
+        background: #f7f3ec;
+        border-radius: 12px;
+        padding: 25px 15px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.32);
+      }
+      .main-content h1 {
+        color: #0f2e27;
+        font-size: 23px;
+        font-weight: 800;
+        text-align: center;
+        line-height: 1.1;
+        margin-bottom: 12px;
+        max-width: 24ch;
+      }
+      .main-content .subtitle {
+        font-size: 14px;
+        color: #111;
+        font-weight: 400;
+        text-align: center;
+        margin-bottom: 0;
+        max-width: 30ch;
+      }
+      .main-content .arrow-down {
+        margin-bottom: 15px;
+        width: 50px;
+        height: 30px;
+        transform: scale(0.4);
+      }
+      .main-content .arrow-down svg {
+        stroke: #0f2e27;
+      }
+      .main-content .video-container {
+        width: 100%;
+        max-width: 480px;
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+      @media (min-width: 501px) {
+        .main-content .arrow-down {
+          margin-bottom: 20px;
+          width: auto;
+          height: auto;
+          transform: none;
+        }
+      }
+      @media (min-width: 601px) {
+        .warning-bar p,
+        .warning-bar strong {
+          font-size: 24px;
+        }
+        .step-bar .step {
+          padding: 16px 10px;
+          font-size: 32px;
+          text-align: center;
+        }
+        .step-bar .step:first-child,
+        .step-bar .step:last-child {
+          text-align: center;
+          font-size: 32px;
+        }
+        .step-bar .step.active {
+          font-size: 34px;
+          padding: 22px 10px;
+          margin: 0 -5px;
+        }
+        .main-content .card {
+          padding: 40px 20px;
+          border-radius: 40px;
+        }
+        .main-content h1 {
+          font-size: 66px;
+        }
+        .main-content .subtitle {
+          font-size: 26px;
+          margin-bottom: 24px;
+        }
+      }
+      @media (min-width: 901px) {
+        .header .secure-badges {
+          max-width: 230px;
+        }
+        .step-bar {
+          margin-bottom: 50px;
+        }
+        .step-bar .container {
+          width: 95%;
+          padding: 0 15px;
+        }
+      }
+    </style>
+
+    <!-- 15. External CSS — non render-blocking -->
+    <link
+      rel="stylesheet"
+      href="assets/css/style.css"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="assets/css/style.css" />
+    </noscript>
+
+    <!-- 16. Page flow control — always the last script in <head> -->
+    <script>
+      (function () {
+        var DELAY_SECONDS = 440;
+        var PLAYER_SRC =
+          "https://scripts.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/players/6a9ad63d364c7569e925a59a/v4/player.js";
+
+        /* The VTurb bundle is ~286 KB. Injecting it here — two animation frames
+           after the DOM is ready, i.e. once the first frame has been committed —
+           keeps every one of those bytes out of the FCP window while still
+           starting the video within a few hundred ms of the paint. */
+        var injected = false;
+        function injectPlayer() {
+          if (injected) return;
+          injected = true;
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = PLAYER_SRC;
+          document.head.appendChild(s);
+        }
+
+        function afterFirstPaint() {
+          if (!window.requestAnimationFrame) return injectPlayer();
+          requestAnimationFrame(function () {
+            requestAnimationFrame(injectPlayer);
+          });
+        }
+
+        function bindPlayer() {
+          var player = document.querySelector("vturb-smartplayer");
+          if (!player) return;
+          player.addEventListener("player:ready", function () {
+            if (typeof player.displayHiddenElements === "function") {
+              player.displayHiddenElements(DELAY_SECONDS, ["[data-delay]"], {
+                persist: true,
+              });
+            }
+          });
+        }
+
+        function boot() {
+          bindPlayer();
+          afterFirstPaint();
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot, { once: true });
+        } else {
+          boot();
+        }
+      })();
+    </script>
+
+    <!-- 17. CartPanda widget overrides
+         O cpsales.js injeta um banner/ribbon de disclaimer no topo; escondemos
+         por CSS em vez de desligar o script (que quebraria o one-click upsell). -->
+    <style>
+      div#cpd-NaN {
+        display: none !important;
+      }
+
+      .cpd-ribbon {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="warning-bar">
+      <div class="container">
+        <svg
+          class="warning-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 36 36"
+          width="28"
+          height="28"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            fill="#FFCC4D"
+            d="M2.653 35C.811 35-.001 33.662.847 32.027L16.456 1.972c.849-1.635 2.238-1.635 3.087 0l15.609 30.056c.85 1.634.037 2.972-1.805 2.972H2.653z"
+          />
+          <path
+            fill="#231F20"
+            d="M15.583 28.953c0-1.333 1.085-2.418 2.419-2.418 1.333 0 2.418 1.085 2.418 2.418 0 1.334-1.086 2.419-2.418 2.419-1.334 0-2.419-1.085-2.419-2.419zm.186-18.293c0-1.302.961-2.108 2.232-2.108 1.241 0 2.233.837 2.233 2.108v11.938c0 1.271-.992 2.108-2.233 2.108-1.271 0-2.232-.807-2.232-2.108V10.66z"
+          />
+        </svg>
+        <p>
+          <strong class="wn">WARNING:</strong> Do not close or refresh this
+          page,
+          <strong>as it may cause errors with your purchase.</strong>
+        </p>
+      </div>
+    </div>
+
+    <header class="header">
+      <div class="container">
+        <div class="secure-badges">
+          <picture>
+            <source srcset="assets/img/secure-3-1-4.webp" type="image/webp" />
+            <img
+              src="assets/img/secure-3-1-4.png"
+              width="364"
+              height="115"
+              alt="Secure SSL checkout, verified merchant and money-back guarantee badges"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </div>
+      </div>
+    </header>
+
+    <nav class="step-bar" aria-label="Checkout progress">
+      <ol class="container">
+        <li class="step">Shipping info</li>
+        <li class="step active" aria-current="step">New opportunity!</li>
+        <li class="step">Order confirmation</li>
+      </ol>
+    </nav>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="card">
+          <h1>Your Order Is Not Complete Yet</h1>
+          <p class="subtitle">
+            <strong>Please Watch This Important Message Below Now</strong>
+          </p>
+
+          <div class="arrow-down">
+            <svg
+              width="80"
+              height="80"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+          </div>
+
+          <div class="video-container">
+            <vturb-smartplayer
+              id="vid-6a9ad63d364c7569e925a59a"
+              style="
+                display: block;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 400px;
+              "
+              ><div
+                class="vturb-player-placeholder"
+                style="
+                  position: relative;
+                  width: 100%;
+                  padding: 133.33333333333331% 0 0;
+                  z-index: 0;
+                  background-color: black;
+                "
+              ></div
+            ></vturb-smartplayer>
+          </div>
+
+          <div data-delay>
+            <p class="offer-text">
+              Accept Your
+              <span class="highlight">Complete Treatment With 50% OFF</span>
+              Before We Finalize Your Shipment!
+            </p>
+
+            <div class="timer">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span class="time" role="timer" aria-live="off">07:23</span>
+            </div>
+
+            <a
+              class="product-box"
+              href="https://glyco-barrier.mycartpanda.com/ex-ocu/next-offer/MdYnQQmVOG-y2md1NmvNj?accepted=yes"
+            >
+              <div class="product-header">BEST VALUE!</div>
+              <div class="product-body">
+                <div class="product-top-row">
+                  <div class="product-left">
+                    <div class="bottle-count">12 BOTTLES</div>
+                    <picture>
+                      <source srcset="assets/img/12.webp" type="image/webp" />
+                      <img
+                        src="assets/img/12.png"
+                        width="780"
+                        height="633"
+                        alt="12 bottles of Glyco Barrier"
+                        class="bottles-img"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                  <div class="product-right">
+                    <div class="price-per-bottle">
+                      <span class="currency">$</span>
+                      <span class="amount">29</span>
+                      <span class="per">Per<br />Bottle</span>
+                    </div>
+                    <ul class="benefits-list">
+                      <li class="highlight-benefit">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="9 12 11 14 15 10"></polyline>
+                        </svg>
+                        YOU SAVE $1260!
+                      </li>
+                      <li>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="9 12 11 14 15 10"></polyline>
+                        </svg>
+                        60 DAYS GUARANTEE
+                      </li>
+                      <li>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="9 12 11 14 15 10"></polyline>
+                        </svg>
+                        BIGGEST DISCOUNT
+                      </li>
+                    </ul>
+                    <div class="total-price">
+                      TOTAL: <span class="old-price">$1611</span>
+                      <span class="new-price">$348</span>
+                    </div>
+                    <div class="free-shipping">+ FREE US SHIPPING</div>
+                    <div class="app-bonus">+SURPRISE 🎁</div>
+                  </div>
+                </div>
+                <div class="product-bottom-row">
+                  <div class="upgrade-btn">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path
+                        d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                      ></path>
+                    </svg>
+                    UPGRADE NOW!
+                  </div>
+                  <div class="order-bump-box">
+                    <input
+                      type="checkbox"
+                      id="bump-check"
+                      class="order-bump-checkbox"
+                      checked
+                    />
+                    <div class="order-bump-text" id="bump-text-trigger">
+                      <span class="order-bump-title">Add Premium Support</span>
+                      <span class="order-bump-desc">
+                        Priority assistance from the
+                        <b>Glyco Barrier Team</b> for only
+                        <span class="order-bump-price">$19.95</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="https://glyco-barrier.mycartpanda.com/ex-ocu/next-offer/MdYnQQmVOG-y2md1NmvNj?accepted=no"
+              class="no-thanks"
+              ><b>No thanks, </b>I understand that I will never see this offer
+              again.</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      type="text/javascript"
+      src="https://assets.mycartpanda.com/cartx-ecomm-ui-assets/js/cpsales.js"
+    ></script>
+    <script src="https://assets.mycartpanda.com/cartx-ecomm-ui-assets/js/libs/ocu-external.js"></script>
+    <script>
+      new OcuExternal();
+    </script>
+  </body>
+</html>

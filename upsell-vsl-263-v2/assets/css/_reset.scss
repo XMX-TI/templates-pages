@@ -1,0 +1,89 @@
+$text: #333333;
+$secondary: #fec2ca;
+$secondary-dark: #eb6e87;
+$light: #fff;
+$light-2: #c7c7c7;
+$primary: #64416d;
+$primary-light: #83c4ea;
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light-2;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 8px;
+  border: 2px solid $light-2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-light;
+}
+
+::-webkit-scrollbar-corner {
+  background: $light-2;
+}
+.swiper-wrapper {
+  height: auto;
+}
+@mixin container {
+  max-width: 1210px !important;
+  margin: 0 auto !important;
+  width: 90% !important;
+}
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: $text;
+  font-family: "Inter", sans-serif;
+}
+
+.lora {
+  font-family: "Lora", serif;
+}
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+.container {
+  @include container;
+}
+u {
+  text-decoration: underline;
+}
+s {
+  text-decoration: line-through;
+}
+p,
+li {
+  font-size: 20px;
+  line-height: 1.4;
+
+  @media (max-width: 900px) {
+    font-size: 16px;
+  }
+}
+
+svg {
+  display: block;
+}
+
+.swiper-pagination-bullet-active {
+  background: $secondary;
+}

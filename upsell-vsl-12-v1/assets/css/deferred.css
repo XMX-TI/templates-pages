@@ -1,0 +1,982 @@
+/* ==========================================================================
+   Glyco Barrier — fa-fe6-gb — DEFERRED styles
+   Everything here is below the fold or hidden until interaction:
+   the "pick a door" downsell modal, the second downsell and the BuyGoods
+   disclaimer widget. Loaded non-render-blocking from index.html.
+   Mobile-first. Desktop overrides live in @media (min-width: X) only.
+   Breakpoints: 481px / 521px / 981px
+   ========================================================================== */
+
+/* ---------- Modal shell ---------- */
+#popup-overlay *,
+#popup-overlay *::before,
+#popup-overlay *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Montserrat, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+}
+
+#popup-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+#popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#popup-overlay #screen-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 10001;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#popup-overlay .flash-animate {
+  animation: ds-flashAnim 0.6s ease-out;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes ds-flashAnim {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ds-doorPulse {
+  0% {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  }
+}
+
+@keyframes ds-doorShine {
+  0% {
+    left: -100%;
+    top: -100%;
+  }
+  25%,
+  100% {
+    left: 150%;
+    top: 150%;
+  }
+}
+
+@keyframes ds-badgePulse {
+  0% {
+    transform: scale(1) rotate(-2deg);
+    box-shadow: 0 4px 10px rgba(15, 46, 39, 0.3);
+  }
+  100% {
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 8px 20px rgba(15, 46, 39, 0.6);
+  }
+}
+
+@keyframes ds-bounceDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(12px);
+  }
+}
+
+@keyframes ds-popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ds-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-15px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(15px);
+  }
+}
+
+@keyframes ds-scaleReveal {
+  0% {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ds-pulseGlow {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  100% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@keyframes ds-shineAnim {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes ds-floatUp {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-350px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ---------- Card ---------- */
+.popupopen2 {
+  padding-top: 10px !important;
+  font-size: 15px;
+}
+
+#popup-overlay #popup-card {
+  background: #ffffff;
+  width: 95%;
+  max-width: 530px;
+  border-radius: 24px;
+  padding: 40px 10px 25px;
+  position: relative;
+  text-align: center;
+  overflow-y: auto;
+  max-height: 90vh;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+#popup-overlay #popup-card.winner-state {
+  background-color: #f7f3ec !important;
+  border: 5px solid #c58d22 !important;
+  box-shadow: 0 0 80px rgba(197, 141, 34, 0.6) !important;
+  padding-top: 30px;
+}
+
+#popup-overlay #popup-card.winner-state .headline,
+#popup-overlay #popup-card.winner-state .doors-platform {
+  display: none !important;
+}
+
+#popup-overlay .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 32px;
+  color: #7b8794;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+#popup-overlay .close-btn:hover {
+  background: #f1f2f6;
+  color: #c0392b;
+  transform: rotate(90deg);
+}
+
+/* ---------- Headline ---------- */
+#popup-overlay .headline {
+  margin-bottom: 30px;
+}
+
+#popup-overlay .wait-badge {
+  display: inline-block;
+  background: #0f2e27;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  animation: ds-badgePulse 1.5s infinite alternate ease-in-out;
+  cursor: default;
+}
+
+#popup-overlay .headline h2 {
+  font-size: 24px;
+  color: #0f2e27;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+#popup-overlay .headline p {
+  font-size: 18px;
+  color: #516d6a;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+/* ---------- Doors ---------- */
+#popup-overlay .doors-platform {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  padding: 35px 5px 15px;
+  position: relative;
+  margin: 25px 0;
+}
+
+#popup-overlay .arrow-container {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+#popup-overlay .pointing-arrow {
+  font-size: 34px;
+  color: #8f6414;
+  animation: ds-bounceDown 0.8s infinite alternate;
+  display: block;
+}
+
+#popup-overlay .doors-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  perspective: 1500px;
+}
+
+#popup-overlay .door-wrapper {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  flex: 1;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#popup-overlay .door-wrapper:hover:not(.disabled) {
+  transform: translateY(-10px) scale(1.05);
+}
+
+#popup-overlay .door-wrapper:focus-visible {
+  outline: 3px solid #ffdc17;
+  outline-offset: 4px;
+}
+
+#popup-overlay .door {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  position: absolute;
+  transform-origin: left;
+  z-index: 2;
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 4px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+#popup-overlay .door-wrapper:not(.opened) .door {
+  animation: ds-doorPulse 2.5s infinite alternate;
+}
+
+#popup-overlay .door-wrapper:not(.opened) .door::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -150%;
+  width: 50%;
+  height: 300%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(25deg);
+  z-index: 6;
+  animation: ds-doorShine 3.5s linear infinite;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+#popup-overlay #door-1 .door {
+  background: #0f2e27;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #0f2e27 0,
+    #081d18 20px,
+    #0f2e27 40px
+  );
+}
+
+#popup-overlay #door-2 .door {
+  background: #c58d22;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #c58d22 0,
+    #9c6d15 20px,
+    #c58d22 40px
+  );
+}
+
+#popup-overlay #door-3 .door {
+  background: #20594d;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #20594d 0,
+    #17423a 20px,
+    #20594d 40px
+  );
+}
+
+#popup-overlay .door-panel {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+#popup-overlay .door-panel.top {
+  top: 12%;
+  height: 33%;
+}
+
+#popup-overlay .door-panel.bottom {
+  bottom: 12%;
+  height: 33%;
+}
+
+#popup-overlay .door-handle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff2ac, #f1c40f, #d4ac0d);
+  border: 1px solid #b8860b;
+  z-index: 10;
+}
+
+#popup-overlay .q-mark {
+  font-size: 75px;
+  color: #fff;
+  font-weight: 900;
+  text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+#popup-overlay .door-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 12px;
+  border: 4px solid #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+#popup-overlay .door-wrapper.loss-door .door-back {
+  background: #20594d;
+  border-color: #0f2e27;
+  color: #fff;
+}
+
+#popup-overlay .block-symbol {
+  display: block;
+  font-size: 60px;
+  line-height: 1;
+  animation: ds-popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#popup-overlay .loss-msg {
+  display: block;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+#popup-overlay .door-wrapper.opened .door {
+  transform: rotateY(-140deg);
+}
+
+#popup-overlay .shake {
+  animation: none !important;
+}
+
+#popup-overlay .shake.permitir-shake {
+  animation: ds-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+}
+
+#popup-overlay #popup-card.error-state {
+  border: 4px solid #c0392b !important;
+  box-shadow: 0 0 50px rgba(192, 57, 43, 0.6) !important;
+}
+
+/* ---------- Winner reveal ---------- */
+#popup-overlay #discount-reveal {
+  display: none;
+  margin-top: 15px;
+  padding-top: 5px;
+  border-top: none;
+  animation: ds-scaleReveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+#popup-overlay .congrats-title {
+  color: #0f2e27;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+#popup-overlay .offer-lead {
+  font-weight: 800;
+  color: #000;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+#popup-overlay .product-box {
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#popup-overlay .product-box:hover {
+  transform: scale(1.04);
+  transition: transform 0.3s ease;
+}
+
+#popup-overlay .glory-glow {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(
+    circle,
+    rgba(246, 214, 122, 0.45) 0%,
+    transparent 70%
+  );
+  z-index: 0;
+  animation: ds-pulseGlow 2s infinite alternate;
+  pointer-events: none;
+}
+
+#popup-overlay .product-image {
+  width: 50%;
+  max-width: 320px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+}
+
+#popup-overlay .shipping-badge {
+  background: #0f2e27;
+  color: #fff;
+  padding: 8px 30px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(15, 46, 39, 0.3);
+}
+
+#popup-overlay .benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 15px;
+  list-style: none;
+}
+
+#popup-overlay .benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f2e27;
+  text-align: left;
+}
+
+#popup-overlay .benefit-item svg {
+  color: #20594d;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#popup-overlay .price-only {
+  color: #0f2e27;
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+#popup-overlay .save-amount {
+  color: #8f6414;
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+#popup-overlay .cta-button {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  background: linear-gradient(180deg, #f6d67a, #c58d22);
+  color: #0f2e27;
+  border: none;
+  padding: 16px;
+  font-size: 20px;
+  font-weight: 900;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  box-shadow: 0 10px 25px rgba(197, 141, 34, 0.45);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+#popup-overlay .cta-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(197, 141, 34, 0.55);
+}
+
+#popup-overlay .cta-button::after {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: -150%;
+  width: 50%;
+  height: 300%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(25deg);
+  animation: ds-shineAnim 3.5s linear infinite;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+#popup-overlay .cta-button:hover::after {
+  animation-duration: 1.5s;
+}
+
+#popup-overlay .no-thanks {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: #516d6a;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+#popup-overlay .no-thanks:hover {
+  text-decoration: underline;
+  color: #0f2e27;
+}
+
+#popup-overlay .confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 10002;
+  pointer-events: none;
+}
+
+#popup-overlay .float-emoji {
+  position: absolute;
+  font-size: 35px;
+  z-index: 10003;
+  pointer-events: none;
+  animation: ds-floatUp 2.5s forwards;
+}
+
+/* ==========================================================================
+   Second downsell (6 bottles)
+   ========================================================================== */
+#popup-overlay.downsell-overlay {
+  padding-top: 0;
+  background: #0b477a;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+#popup-overlay #popup-card.downsell-state {
+  width: 100%;
+  max-width: none;
+  max-height: 100vh;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #0b477a;
+  box-shadow: none;
+  overflow-y: auto;
+}
+
+#popup-overlay .downsell2-content[hidden] {
+  display: none !important;
+}
+
+#popup-overlay .downsell2-content {
+  min-height: 100vh;
+  margin: 0;
+  background: #0b477a;
+  color: #000000;
+  font-family: Poppins, "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+}
+
+#popup-overlay .downsell2-content *,
+#popup-overlay .downsell2-content *::before,
+#popup-overlay .downsell2-content *::after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+#popup-overlay .downsell2-content .page {
+  min-height: 100vh;
+  padding: 14px 6px;
+}
+
+#popup-overlay .downsell2-content .offer-card {
+  width: min(1824px, 100%);
+  min-height: calc(100vh - 28px);
+  margin: 0 auto;
+  padding: 28px 18px 34px;
+  border-radius: 24px 0 0 0;
+  background: #ffffff;
+}
+
+#popup-overlay .downsell2-content .offer-header {
+  max-width: 1600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#popup-overlay .downsell2-content .offer-header h2 {
+  margin: 0 auto 16px;
+  color: #d40000;
+  font-size: clamp(28px, 2.4vw, 42px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+#popup-overlay .downsell2-content .offer-header p {
+  margin: 0;
+  color: #000000;
+  font-size: clamp(24px, 2vw, 34px);
+  line-height: 1.15;
+}
+
+#popup-overlay .downsell2-content .offer-header strong {
+  font-weight: 900;
+}
+
+#popup-overlay .downsell2-content .offer-body {
+  display: grid;
+  gap: 22px;
+  max-width: 1500px;
+  margin: 42px auto 0;
+  align-items: center;
+}
+
+#popup-overlay .downsell2-content .product-side {
+  display: grid;
+  justify-items: center;
+}
+
+#popup-overlay .downsell2-content .product-image {
+  width: min(620px, 100%);
+  max-width: 100%;
+  height: auto;
+}
+
+#popup-overlay .downsell2-content .shipping-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 10px 22px;
+  border-radius: 5px;
+  background: #0e4e83;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+#popup-overlay .downsell2-content .benefits {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  color: #4d3e5e;
+  font-size: 16px;
+  font-weight: 700;
+  list-style: none;
+  text-align: center;
+}
+
+#popup-overlay .downsell2-content .benefits li::before {
+  content: "\2713";
+  margin-right: 8px;
+  color: #3442f2;
+  font-weight: 900;
+}
+
+#popup-overlay .downsell2-content .checkout-side {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  padding-top: 0;
+  text-align: center;
+}
+
+#popup-overlay .downsell2-content .price-line {
+  margin: 0;
+  color: #c05600;
+  font-size: clamp(38px, 3vw, 52px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+#popup-overlay .downsell2-content .save-line {
+  margin: 0 0 12px;
+  color: #008a00;
+  font-size: clamp(36px, 2.8vw, 48px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+#popup-overlay .downsell2-content .upgrade-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: min(340px, 100%);
+  min-height: 68px;
+  padding: 16px 24px;
+  background: #ffb300;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+}
+
+#popup-overlay .downsell2-content .decline-link {
+  margin-top: 20px;
+  color: #4d4654;
+  font-size: clamp(21px, 1.7vw, 28px);
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   >= 481px
+   ========================================================================== */
+@media (min-width: 481px) {
+  #popup-overlay #popup-card {
+    padding: 45px 35px 35px;
+  }
+  #popup-overlay .doors-platform {
+    padding: 40px 15px 20px;
+  }
+  #popup-overlay .doors-container {
+    gap: 15px;
+  }
+  #popup-overlay .headline h2 {
+    font-size: 28px;
+  }
+  #popup-overlay .door-wrapper {
+    height: 240px;
+  }
+  #popup-overlay .cta-button {
+    font-size: 22px;
+  }
+}
+
+/* ==========================================================================
+   >= 521px
+   ========================================================================== */
+@media (min-width: 521px) {
+  #popup-overlay .downsell2-content .page {
+    padding: 32px 8px;
+  }
+  #popup-overlay .downsell2-content .offer-card {
+    min-height: calc(100vh - 64px);
+  }
+  #popup-overlay .downsell2-content .offer-header h2 {
+    margin-bottom: 24px;
+  }
+  #popup-overlay .downsell2-content .shipping-badge {
+    font-size: 18px;
+  }
+  #popup-overlay .downsell2-content .upgrade-button {
+    font-size: 24px;
+  }
+}
+
+/* ==========================================================================
+   >= 981px — two-column layout only from here up
+   ========================================================================== */
+@media (min-width: 981px) {
+  #popup-overlay .downsell2-content .offer-card {
+    padding: 36px 54px 22px;
+    border-radius: 36px 0 0 0;
+  }
+  #popup-overlay .downsell2-content .offer-header p {
+    line-height: 0.95;
+  }
+  #popup-overlay .downsell2-content .offer-body {
+    grid-template-columns: minmax(540px, 1.05fr) minmax(420px, 0.9fr);
+    gap: 54px;
+    margin: 90px auto 0;
+  }
+  #popup-overlay .downsell2-content .product-image {
+    width: 100%;
+    max-width: 300px;
+  }
+  #popup-overlay .downsell2-content .checkout-side {
+    padding-top: 100px;
+  }
+}
+
+/* ==========================================================================
+   BuyGoods disclaimer widget
+   ========================================================================== */
+#disclaimer {
+  display: block;
+  width: 100%;
+}
+#disclaimer * {
+  color: #ddd !important;
+}
+#disclaimer > div {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+#disclaimer div[style*="display:flex"] {
+  flex-wrap: wrap !important;
+}
+#disclaimer img {
+  max-width: 140px !important;
+  height: auto !important;
+}
+#disclaimer div[style*="flex:0 0 200px"],
+#disclaimer div[style*="flex:1 1 500px"] {
+  flex: 1 1 100% !important;
+  min-width: 0 !important;
+}
+
+@media (min-width: 769px) {
+  #disclaimer img {
+    max-width: none !important;
+  }
+  #disclaimer div[style*="flex:0 0 200px"] {
+    flex: 0 0 200px !important;
+  }
+  #disclaimer div[style*="flex:1 1 500px"] {
+    flex: 1 1 500px !important;
+  }
+}
