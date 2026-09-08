@@ -72,7 +72,7 @@
     <link rel="preconnect" href="https://cdn.converteai.net" crossorigin />
     <link rel="dns-prefetch" href="https://images.converteai.net" />
     <link rel="dns-prefetch" href="https://license.vturb.com" />
-    <link rel="dns-prefetch" href="https://glyco-barrier.mycartpanda.com" />
+    
     <link rel="dns-prefetch" href="https://www.clarity.ms" />
 
     <!-- 10. Font — self-hosted, same origin, display:optional (zero CLS)
@@ -456,9 +456,7 @@
       })();
     </script>
 
-    <!-- 17. CartPanda widget overrides
-         O cpsales.js injeta um banner/ribbon de disclaimer no topo; escondemos
-         por CSS em vez de desligar o script (que quebraria o one-click upsell). -->
+    
     <style>
       div#cpd-NaN {
         display: none !important;
@@ -600,7 +598,7 @@
 
             <a
               class="product-box"
-              href="https://glyco-barrier.mycartpanda.com/ex-ocu/next-offer/MdYnQQmVOG-y2md1NmvNj?accepted=yes"
+              href="linkoffer"
             >
               <div class="product-header">BEST VALUE!</div>
               <div class="product-body">
@@ -725,7 +723,7 @@
             </a>
 
             <a
-              href="https://glyco-barrier.mycartpanda.com/ex-ocu/next-offer/MdYnQQmVOG-y2md1NmvNj?accepted=no"
+              href="linkno"
               class="no-thanks"
               ><b>No thanks, </b>I understand that I will never see this offer
               again.</a
@@ -735,13 +733,6 @@
       </div>
     </main>
 
-    <script
-      type="text/javascript"
-      src="https://assets.mycartpanda.com/cartx-ecomm-ui-assets/js/cpsales.js"
-    ></script>
-    <script src="https://assets.mycartpanda.com/cartx-ecomm-ui-assets/js/libs/ocu-external.js"></script>
-    <script>
-      new OcuExternal();
-    </script>
+   
   </body>
 </html>
