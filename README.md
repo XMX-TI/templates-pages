@@ -6,9 +6,9 @@ Catálogo interno de modelos de página de **upsell** em HTML estático, consoli
 
 | Preview | Template | Ofertas | Vídeo |
 | --- | --- | --- | --- |
-|  | [upsell-vsl-12-v1](templates-upsells/upsell-vsl-12-v1/) | 1 oferta + order bump | Sim |
-|  | [upsell-vsl-263-v2](templates-upsells/upsell-vsl-263-v2/) | 3 kits | Sim |
-|  | [upsell-vsl-396-v1](templates-upsells/upsell-vsl-396-v1/) | 3 kits | Sim |
+| <a href="templates-upsells/upsell-vsl-12-v1/preview.png"><img src="templates-upsells/upsell-vsl-12-v1/preview.png" width="180" alt="preview do upsell-vsl-12-v1"></a> | [upsell-vsl-12-v1](templates-upsells/upsell-vsl-12-v1/) | 1 oferta + order bump | Sim |
+| <a href="templates-upsells/upsell-vsl-263-v2/preview.png"><img src="templates-upsells/upsell-vsl-263-v2/preview.png" width="180" alt="preview do upsell-vsl-263-v2"></a> | [upsell-vsl-263-v2](templates-upsells/upsell-vsl-263-v2/) | 3 kits | Sim |
+| <a href="templates-upsells/upsell-vsl-396-v1/preview.png"><img src="templates-upsells/upsell-vsl-396-v1/preview.png" width="180" alt="preview do upsell-vsl-396-v1"></a> | [upsell-vsl-396-v1](templates-upsells/upsell-vsl-396-v1/) | 3 kits | Sim |
 
 Os três templates compartilham a mesma base técnica: player VTurb/ConverteAI, liberação da oferta só depois de N segundos de vídeo (`data-delay`) e integração de one-click upsell da CartPanda.
 
@@ -47,7 +47,7 @@ Levantadas na consolidação deste catálogo, em ordem de prioridade:
 
 - **Nenhum template está sanitizado.** Todos os três `index.html` contêm nome de produto real, preços reais, links de checkout/OCU de produção da CartPanda, IDs de conta e de player VTurb/ConverteAI e ID de projeto do Microsoft Clarity. Precisam ser limpos antes de o catálogo ser usado como referência pública interna.
 - **Nenhum template usa placeholders `{{NOME}}`.** A parametrização ainda precisa ser feita nos três.
-- **Nenhuma pasta tem `preview.png`** — as células de preview da tabela acima estão vazias por isso.
+- **`upsell-vsl-12-v1` referencia uma fonte que não existe** (`assets/fonts/montserrat-latin-var.woff2`) — o texto cai no fallback do sistema.
 - **`upsell-vsl-12-v1` e `upsell-vsl-396-v1` não têm `README.md` próprio.**
 - **`upsell-vsl-263-v2/README.md` não descreve o template**: é o README de outro projeto (Memyts), sobre estrutura de branches, que veio junto na consolidação e deve ser reescrito.
 - **`upsell-vsl-263-v2` carrega ferramental de build residual** (`gulpfile.js`, `package.json`, `package-lock.json`, `assets/css/scss/` duplicado com `assets/css/`), o que não faz sentido para um template estático de catálogo.
