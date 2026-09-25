@@ -1,0 +1,1852 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Order Is Not Complete Yet</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/kits.css" />
+
+    
+
+    <style>
+      .product-box:hover {
+        transform: scale(1.04);
+        transition: transform 0.3s ease;
+      }
+      .app-bonus {
+        position: relative;
+        overflow: hidden;
+      }
+      .app-bonus::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.5) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        animation: shine 3s infinite;
+        pointer-events: none;
+      }
+      @keyframes shine {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      #popup-overlay *,
+      #popup-overlay *::before,
+      #popup-overlay *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      #popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.92);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 0 20px;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s ease;
+        backdrop-filter: blur(8px);
+        overflow-y: auto;
+      }
+
+      #popup-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      #popup-overlay #screen-flash {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        z-index: 10001;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #popup-overlay .flash-animate {
+        animation: ds-flashAnim 0.6s ease-out;
+      }
+
+      @keyframes ds-flashAnim {
+        0% {
+          opacity: 0.8;
+        }
+
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes ds-doorPulse {
+        0% {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        100% {
+          box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      @keyframes ds-doorShine {
+        0% {
+          left: -100%;
+          top: -100%;
+        }
+
+        25%,
+        100% {
+          left: 150%;
+          top: 150%;
+        }
+      }
+
+      @keyframes ds-badgePulse {
+        0% {
+          transform: scale(1) rotate(-2deg);
+          box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+
+        100% {
+          transform: scale(1.1) rotate(-2deg);
+          box-shadow: 0 8px 20px rgba(39, 174, 96, 0.6);
+        }
+      }
+
+      @keyframes ds-bounceDown {
+        from {
+          transform: translateY(0);
+        }
+
+        to {
+          transform: translateY(12px);
+        }
+      }
+
+      @keyframes ds-popIn {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes ds-shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: translateX(-15px);
+        }
+
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: translateX(15px);
+        }
+      }
+
+      @keyframes ds-scaleReveal {
+        0% {
+          transform: translateY(10px) scale(0.98);
+          opacity: 0;
+        }
+
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes ds-pulseGlow {
+        0% {
+          opacity: 0.4;
+          transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        100% {
+          opacity: 0.8;
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      @keyframes ds-shineAnim {
+        0% {
+          left: -100%;
+        }
+
+        100% {
+          left: 150%;
+        }
+      }
+
+      @keyframes ds-floatUp {
+        0% {
+          transform: translateY(0) scale(0.5);
+          opacity: 1;
+        }
+
+        100% {
+          transform: translateY(-350px) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .popupopen2 {
+        padding-top: 10px !important;
+        font-size: 15px;
+      }
+
+      #popup-overlay #popup-card {
+        background: #ffffff;
+        width: 95%;
+        max-width: 530px;
+        border-radius: 24px;
+        padding: 45px 35px 35px;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        flex-shrink: 0;
+      }
+
+      #popup-overlay #popup-card.winner-state {
+        background-color: #f7fffb !important;
+        border: 5px solid #2ecc71 !important;
+        box-shadow: 0 0 80px rgba(46, 204, 113, 0.6) !important;
+        padding-top: 30px;
+      }
+
+      #popup-overlay #popup-card.winner-state .headline,
+      #popup-overlay #popup-card.winner-state .doors-platform {
+        display: none !important;
+      }
+
+      #popup-overlay .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 32px;
+        color: #d1d8e0;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        border-radius: 50%;
+        z-index: 1000;
+      }
+
+      #popup-overlay .close-btn:hover {
+        background: #f1f2f6;
+        color: #e74c3c;
+        transform: rotate(90deg);
+      }
+
+      #popup-overlay .headline {
+        margin-bottom: 30px;
+      }
+
+      #popup-overlay .wait-badge {
+        display: inline-block;
+        background: #27ae60;
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        animation: ds-badgePulse 1.5s infinite alternate ease-in-out;
+        cursor: default;
+      }
+
+      #popup-overlay .headline h1 {
+        font-size: 28px;
+        color: #1e272e;
+        font-weight: 900;
+        line-height: 1.3;
+      }
+
+      #popup-overlay .headline p {
+        font-size: 18px;
+        color: #4b6584;
+        font-weight: 700;
+        margin-top: 5px;
+      }
+
+      #popup-overlay .doors-platform {
+        background: rgba(0, 0, 0, 0.04);
+        border-radius: 20px;
+        padding: 40px 15px 20px;
+        position: relative;
+        margin: 25px 0;
+      }
+
+      #popup-overlay .arrow-container {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      #popup-overlay .pointing-arrow {
+        font-size: 34px;
+        color: #e74c3c;
+        animation: ds-bounceDown 0.8s infinite alternate;
+        display: block;
+      }
+
+      #popup-overlay .doors-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        perspective: 1500px;
+      }
+
+      #popup-overlay .door-wrapper {
+        flex: 1;
+        height: 240px;
+        position: relative;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      #popup-overlay .door-wrapper:hover:not(.disabled) {
+        transform: translateY(-10px) scale(1.05);
+      }
+
+      #popup-overlay .door {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        position: absolute;
+        transform-origin: left;
+        z-index: 2;
+        transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 4px solid rgba(0, 0, 0, 0.25);
+        box-shadow:
+          inset 0 0 25px rgba(0, 0, 0, 0.4),
+          0 10px 20px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backface-visibility: hidden;
+        overflow: hidden;
+      }
+
+      #popup-overlay .door-wrapper:not(.opened) .door {
+        animation: ds-doorPulse 2.5s infinite alternate;
+      }
+
+      #popup-overlay .door-wrapper:not(.opened) .door::before {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: -150%;
+        width: 50%;
+        height: 300%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transform: rotate(25deg);
+        z-index: 6;
+        animation: ds-doorShine 3.5s linear infinite;
+        filter: blur(6px);
+        pointer-events: none;
+      }
+
+      #popup-overlay #door-1 .door {
+        background: #c0392b;
+        background-image: repeating-linear-gradient(
+          90deg,
+          #c0392b 0,
+          #a5281b 20px,
+          #c0392b 40px
+        );
+      }
+
+      #popup-overlay #door-2 .door {
+        background: #2980b9;
+        background-image: repeating-linear-gradient(
+          90deg,
+          #2980b9 0,
+          #216a96 20px,
+          #2980b9 40px
+        );
+      }
+
+      #popup-overlay #door-3 .door {
+        background: #27ae60;
+        background-image: repeating-linear-gradient(
+          90deg,
+          #27ae60 0,
+          #1e8449 20px,
+          #27ae60 40px
+        );
+      }
+
+      #popup-overlay .door-panel {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      #popup-overlay .door-panel.top {
+        top: 12%;
+        height: 33%;
+      }
+
+      #popup-overlay .door-panel.bottom {
+        bottom: 12%;
+        height: 33%;
+      }
+
+      #popup-overlay .door-handle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fff2ac,
+          #f1c40f,
+          #d4ac0d
+        );
+        border: 1px solid #b8860b;
+        z-index: 10;
+      }
+
+      #popup-overlay .q-mark {
+        font-size: 75px;
+        color: #fff;
+        font-weight: 900;
+        text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+      }
+
+      #popup-overlay .door-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        border-radius: 12px;
+        border: 4px solid #eee;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      #popup-overlay .door-wrapper.loss-door .door-back {
+        background: #f39c12;
+        border-color: #c0392b;
+        color: #fff;
+      }
+
+      #popup-overlay .block-symbol {
+        font-size: 60px;
+        line-height: 1;
+        animation: ds-popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      #popup-overlay .loss-msg {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-top: 5px;
+      }
+
+      #popup-overlay .door-wrapper.opened .door {
+        transform: rotateY(-140deg);
+      }
+
+      #popup-overlay .shake {
+        animation: none !important;
+      }
+
+      #popup-overlay .shake.permitir-shake {
+        animation: ds-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
+      }
+
+      #popup-overlay #popup-card.error-state {
+        border: 4px solid #e74c3c !important;
+        box-shadow: 0 0 50px rgba(231, 76, 60, 0.6) !important;
+      }
+
+      #popup-overlay #discount-reveal {
+        display: none;
+        margin-top: 15px;
+        padding-top: 5px;
+        border-top: none;
+        animation: ds-scaleReveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      }
+
+      #popup-overlay .congrats-title {
+        color: #27ae60;
+        font-weight: 900;
+        font-size: 28px;
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+
+      #popup-overlay .product-box {
+        position: relative;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #popup-overlay .glory-glow {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(
+          circle,
+          rgba(46, 204, 113, 0.35) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+        animation: ds-pulseGlow 2s infinite alternate;
+      }
+
+      #popup-overlay .product-image {
+        width: 50%;
+        max-width: 320px;
+        position: relative;
+        margin-bottom: 14px;
+        z-index: 1;
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+      }
+
+      #popup-overlay .shipping-badge {
+        background: #9b59b6;
+        color: #fff;
+        padding: 8px 30px;
+        border-radius: 12px;
+        font-weight: 900;
+        font-size: 16px;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+      }
+
+      #popup-overlay .benefits-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 15px;
+      }
+
+      #popup-overlay .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 800;
+        color: #1e272e;
+      }
+
+      #popup-overlay .benefit-item svg {
+        color: #2ecc71;
+        width: 18px;
+        height: 18px;
+      }
+
+      #popup-overlay .price-only {
+        color: #27ae60;
+        font-size: 28px;
+        font-weight: 900;
+        margin-bottom: 2px;
+      }
+
+      #popup-overlay .save-amount {
+        color: #e67e22;
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+
+      #popup-overlay .cta-button {
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        color: #fff;
+        border: none;
+        padding: 16px;
+        font-size: 22px;
+        font-weight: 900;
+        border-radius: 15px;
+        cursor: pointer;
+        width: 100%;
+        text-transform: uppercase;
+        box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      #popup-overlay .cta-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(39, 174, 96, 0.5);
+      }
+
+      #popup-overlay .cta-button::after {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: -150%;
+        width: 50%;
+        height: 300%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transform: rotate(25deg);
+        animation: ds-shineAnim 3.5s linear infinite;
+        filter: blur(6px);
+      }
+
+      #popup-overlay .cta-button:hover::after {
+        animation-duration: 1.5s;
+      }
+
+      #popup-overlay .no-thanks {
+        display: block;
+        margin-top: 10px;
+        color: #808e9b;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      #popup-overlay .no-thanks:hover {
+        text-decoration: underline;
+        color: #e74c3c;
+      }
+
+      #popup-overlay .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        z-index: 10002;
+        pointer-events: none;
+      }
+
+      #popup-overlay .float-emoji {
+        position: absolute;
+        font-size: 35px;
+        z-index: 10003;
+        pointer-events: none;
+        animation: ds-floatUp 2.5s forwards;
+      }
+
+      @media (max-width: 480px) {
+        #popup-overlay #popup-card {
+          padding: 40px 10px 25px;
+        }
+
+        #popup-overlay .doors-platform {
+          padding: 35px 5px 15px;
+        }
+
+        #popup-overlay .doors-container {
+          gap: 8px;
+        }
+
+        #popup-overlay .headline h1 {
+          font-size: 24px;
+        }
+
+        #popup-overlay .door-wrapper {
+          height: 200px;
+        }
+
+        #popup-overlay .cta-button {
+          font-size: 20px;
+        }
+      }
+
+      /* Downsell Offer Styles */
+      #popup-overlay.downsell-overlay {
+        background: #1c0b0b !important;
+      }
+
+      #popup-overlay #popup-card.downsell-state {
+        background-color: #ffffff !important;
+        border: none !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+        padding: 50px;
+        max-width: 1140px !important;
+        width: 90%;
+        border-radius: 40px;
+      }
+
+      #popup-overlay .downsell-title {
+        color: #ff0000;
+        font-weight: 900;
+        font-size: 36px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+
+      #popup-overlay .downsell-text {
+        color: #000;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.4;
+        padding: 0 20px;
+      }
+
+      #popup-overlay .downsell-text strong {
+        font-weight: 800;
+      }
+
+      #popup-overlay .downsell-content {
+        display: flex;
+        gap: 60px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #popup-overlay .downsell-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #popup-overlay .downsell-image {
+        width: 100%;
+        margin-bottom: 25px;
+        filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+      }
+
+      #popup-overlay .downsell-shipping-badge {
+        background: #2a1616;
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-weight: 900;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      #popup-overlay .downsell-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        text-align: center;
+      }
+
+      #popup-overlay .downsell-benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 17px;
+        text-align: center;
+        justify-content: center;
+        font-weight: 500;
+        color: #000;
+      }
+
+      #popup-overlay .downsell-benefit-item svg {
+        flex-shrink: 0;
+      }
+
+      #popup-overlay .downsell-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      #popup-overlay .downsell-price {
+        color: #f39c12;
+        font-size: 42px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+
+      #popup-overlay .downsell-save {
+        color: #27ae60;
+        font-size: 40px;
+        font-weight: 900;
+        margin-bottom: 30px;
+      }
+
+      #popup-overlay .downsell-cta {
+        display: inline-block;
+        text-decoration: none;
+        text-align: center;
+        background: #ffb800;
+        color: #000;
+        border: none;
+        padding: 20px;
+        font-size: 26px;
+        font-weight: 900;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 30px;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      #popup-overlay .downsell-cta:hover {
+        background: #f39c12;
+        transform: translateY(-2px);
+      }
+
+      #popup-overlay .downsell-no-thanks {
+        display: block;
+        color: #7f8c8d;
+        font-size: 20px;
+        font-weight: 400;
+        text-decoration: none;
+        line-height: 1.4;
+      }
+
+      #popup-overlay .downsell-no-thanks:hover {
+        text-decoration: underline;
+        color: #34495e;
+      }
+
+      @media (max-width: 768px) {
+        #popup-overlay #popup-card.downsell-state {
+          padding: 15px;
+        }
+        #popup-overlay .downsell-title {
+          font-size: 18px;
+        }
+        #popup-overlay .downsell-text {
+          font-size: 16px;
+          padding: 0;
+        }
+        #popup-overlay .downsell-content {
+          flex-direction: column;
+          gap: 10px;
+        }
+        #popup-overlay .downsell-left,
+        #popup-overlay .downsell-right {
+          width: 100%;
+        }
+        #popup-overlay .downsell-price {
+          font-size: 20px;
+          margin-bottom: 4px;
+        }
+        #popup-overlay .downsell-save {
+          font-size: 18px;
+          margin-bottom: 12px;
+        }
+        #popup-overlay .downsell-cta {
+          font-size: 16px;
+          padding: 15px;
+          margin-bottom: 10px;
+        }
+        #popup-overlay .downsell-no-thanks {
+          font-size: 16px;
+        }
+
+        #popup-overlay .downsell-shipping-badge {
+          padding: 4px;
+          font-size: 14px;
+        }
+        #popup-overlay .downsell-benefits {
+          gap: 2px;
+        }
+        #popup-overlay .downsell-benefit-item {
+          font-size: 12px;
+        }
+        #popup-overlay .downsell-image {
+          margin-bottom: 0;
+        }
+      }
+    </style>
+
+    <link
+      rel="shortcut icon"
+      href="assets/img/favicon.svg"
+      type="image/x-icon"
+    />
+
+    <style>
+      [data-delay] {
+        display: block;
+      }
+    </style>
+
+    <script>
+      !(function (i, n) {
+        i._plt =
+          i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now());
+      })(window, performance);
+    </script>
+    <link
+      rel="preload"
+      href="https://scripts.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/players/6a8cdfdc75f4de8d0e4d0f77/v4/player.js"
+      as="script"
+    />
+    <link
+      rel="preload"
+      href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js"
+      as="script"
+    />
+    <link
+      rel="preload"
+      href="https://cdn.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/6a7de39890864ff4e21eb5b9/main.m3u8"
+      as="fetch"
+    />
+    <link rel="dns-prefetch" href="https://cdn.converteai.net" />
+    <link rel="dns-prefetch" href="https://scripts.converteai.net" />
+    <link rel="dns-prefetch" href="https://images.converteai.net" />
+    <link rel="dns-prefetch" href="https://license.vturb.com" />
+
+    <script src="assets/js/page-flow.js"></script>
+  </head>
+  <body>
+    <div class="warning-bar">
+      <div class="container">
+        <img src="assets/img/selo.svg" alt />
+        <p>
+          <strong class="wn">WARNING:</strong> Do not close or refresh this
+          page,
+        </p>
+      </div>
+    </div>
+
+    <header class="header">
+      <div class="container">
+        <div class="secure-badges">
+          <img src="assets/img/secure-3-1-4.png" alt />
+        </div>
+      </div>
+    </header>
+
+    <nav class="step-bar">
+      <div class="container">
+        <div class="step active">NEW OPPORTUNITY!</div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="card">
+          <h1>Your Order Is Not Complete Yet</h1>
+          <p class="subtitle">
+            <strong>Please Watch This Important Message Below Now</strong>
+          </p>
+
+          <div class="arrow-down">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+          </div>
+
+          <div class="video-container">
+            <div class="sempa">
+              <vturb-smartplayer
+                id="vid-6a8cdfdc75f4de8d0e4d0f77"
+                style="
+                  display: block;
+                  margin: 0 auto;
+                  width: 100%;
+                  max-width: 400px;
+                "
+                ><div
+                  class="vturb-player-placeholder"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    padding: 125% 0 0;
+                    z-index: 0;
+                    background-color: black;
+                  "
+                ></div
+              ></vturb-smartplayer>
+              <script type="text/javascript">
+                var s = document.createElement("script");
+                ((s.src =
+                  "https://scripts.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/players/6a8cdfdc75f4de8d0e4d0f77/v4/player.js"),
+                  (s.async = !0),
+                  document.head.appendChild(s));
+              </script>
+            </div>
+            <!--
+            <div class="compa">
+              <script>
+                !(function (i, n) {
+                  i._plt =
+                    i._plt ||
+                    (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now());
+                })(window, performance);
+              </script>
+              <link
+                rel="preload"
+                href="https://scripts.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/players/6a216b329215eb145b93c38b/v4/player.js"
+                as="script"
+              />
+              <link
+                rel="preload"
+                href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js"
+                as="script"
+              />
+              <link
+                rel="preload"
+                href="https://cdn.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/69efbe0bb4ba2692ad54b5b4/main.m3u8"
+                as="fetch"
+              />
+              <link rel="dns-prefetch" href="https://cdn.converteai.net" />
+              <link rel="dns-prefetch" href="https://scripts.converteai.net" />
+              <link rel="dns-prefetch" href="https://images.converteai.net" />
+              <link rel="dns-prefetch" href="https://license.vturb.com" />
+
+              <vturb-smartplayer
+                id="vid-6a216b329215eb145b93c38b"
+                style="
+                  display: block;
+                  margin: 0 auto;
+                  width: 100%;
+                  max-width: 400px;
+                "
+                ><div
+                  class="vturb-player-placeholder"
+                  style="
+                    position: relative;
+                    width: 100%;
+                    padding: 177.77777777777777% 0 0;
+                    z-index: 0;
+                    background-color: black;
+                  "
+                ></div
+              ></vturb-smartplayer>
+              <script type="text/javascript">
+                var s = document.createElement("script");
+                ((s.src =
+                  "https://scripts.converteai.net/bff5868f-b8e9-4bb4-af45-52d9b7681a6e/players/6a216b329215eb145b93c38b/v4/player.js"),
+                  (s.async = !0),
+                  document.head.appendChild(s));
+              </script>
+
+              <script>
+                (function () {
+                  var delaySeconds = 194;
+                  var player = document.getElementById(
+                    "vid-6a216b329215eb145b93c38b",
+                  );
+                  if (player) {
+                    player.addEventListener("player:ready", function () {
+                      player.displayHiddenElements(
+                        delaySeconds,
+                        ["[data-delay]"],
+                        {
+                          persist: true,
+                        },
+                      );
+                    });
+                  }
+                })();
+              </script>
+            </div> -->
+          </div>
+          <div data-delay>
+            <p class="offer-text">
+              Accept Your Complete Treatment<span class="highlight">
+                With 50% OFF</span
+              >
+              Before We Finalize Your Shipment!
+            </p>
+
+            <div class="timer">
+              <svg
+                aria-hidden="true"
+                class="e-font-icon-svg e-fas-stopwatch"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432 304c0 114.9-93.1 208-208 208S16 418.9 16 304c0-104 76.3-190.2 176-205.5V64h-28c-6.6 0-12-5.4-12-12V12c0-6.6 5.4-12 12-12h120c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-28v34.5c37.5 5.8 71.7 21.6 99.7 44.6l27.5-27.5c4.7-4.7 12.3-4.7 17 0l28.3 28.3c4.7 4.7 4.7 12.3 0 17l-29.4 29.4-.6.6C419.7 223.3 432 262.2 432 304zm-176 36V188.5c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12V340c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12z"
+                ></path>
+              </svg>
+              <span class="timer-txt" id="countdown-timer">05:00</span>
+            </div>
+
+            <section class="area-kits" id="kits">
+              <div class="kits-container">
+                <div class="area-title">
+                  <h2><span>Choose Your</span>&nbsp;Package Below</h2>
+                </div>
+                <ul class="kits-grid">
+                  <li class="kit-option k1">
+                    <a
+                      href="linkoffer1"
+                    >
+                      <div class="kit-header">STARTER</div>
+                      <div class="kit-main">
+                        <strong>2 BOTTLES</strong>
+                        <span class="days">60 Day Supply</span>
+                        <div class="area-img">
+                          <img
+                            src="assets/img/2.webp"
+                            alt="2 BOTTLES"
+                            width="378"
+                            height="267"
+                          />
+                          <div class="save">
+                            <b>Save $258.04 <br />TODAY</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="kit-footer">
+                        <div class="price">
+                          <strong>$49<small>.98</small></strong>
+                          <div>/ bottle</div>
+                        </div>
+                        <ul>
+                          <li>60 DAYS GUARANTEE</li>
+                          <li>YOU SAVE $258.04 TODAY</li>
+                        </ul>
+                        <button class="kit-button">
+                          <img src="assets/img/btn.png" alt="Add To Cart" />
+                        </button>
+                        <img
+                          src="assets/img/card.png"
+                          alt="Credit Cards"
+                          class="bandeiras"
+                        />
+                        <div class="valores">
+                          <span>Total: <s>$358</s> $99.96</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li class="kit-option best-option">
+                    <a
+                      href="linkoffer2"
+                    >
+                      <div class="kit-header">BEST VALUE</div>
+                      <div class="kit-main">
+                        <strong>6 BOTTLES</strong>
+                        <span class="days">180 Day Supply</span>
+                        <div class="area-img">
+                          <img src="assets/img/free.svg" alt="" class="frete" />
+                          <img
+                            src="assets/img/6.webp"
+                            alt="6 BOTTLES"
+                            width="412"
+                            height="239"
+                          />
+                          <div class="save">
+                            <b>Save $894.12 <br />TODAY</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="kit-footer">
+                        <div class="price">
+                          <strong>$29<small>.98</small></strong>
+                          <div>/ bottle</div>
+                        </div>
+                        <ul>
+                          <li>60 DAYS GUARANTEE</li>
+                          <li>FAST &amp; FREE SHIPPING</li>
+                          <li>YOU SAVE $894.12 TODAY</li>
+                        </ul>
+                        <button class="kit-button">
+                          <img
+                            src="assets/img/btn-mouse.png"
+                            alt="Add To Cart"
+                            style="margin-bottom: -15px"
+                          />
+                        </button>
+                        <img
+                          src="assets/img/card.png"
+                          alt="Credit Cards"
+                          class="bandeiras"
+                        />
+                        <div class="valores">
+                          <span>Total: <s>$1,074</s> $179.88</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+
+                  <li class="kit-option k3">
+                    <a
+                      href="linkoffer3"
+                    >
+                      <div class="kit-header">GOOD VALUE</div>
+                      <div class="kit-main">
+                        <strong>3 BOTTLES</strong>
+                        <span class="days">90 Day Supply</span>
+                        <div class="area-img">
+                          <img
+                            src="assets/img/3.webp"
+                            alt="3 BOTTLES"
+                            width="364"
+                            height="237"
+                          />
+                          <div class="save">
+                            <b>Save $417.06 <br />TODAY</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="kit-footer">
+                        <div class="price">
+                          <strong>$39<small>.98</small></strong>
+                          <div>/ bottle</div>
+                        </div>
+                        <ul>
+                          <li>60 DAYS GUARANTEE</li>
+
+                          <li>YOU SAVE $417.06 TODAY</li>
+                        </ul>
+                        <button class="kit-button">
+                          <img src="assets/img/btn.png" alt="Add To Cart" />
+                        </button>
+                        <img
+                          src="assets/img/card.png"
+                          alt="Credit Cards"
+                          class="bandeiras"
+                        />
+                        <div class="valores">
+                          <span>Total: <s>$537</s> $119.94</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+                <!-- <a
+                  href="linkno"
+                  class="linkdeny"
+                >
+                  NO THANKS I understand that this is my only opportunity to get
+                  access<br />
+                  to this special offer, and I'm okay with missing out. I'll
+                  pass on this chance forever.
+                </a> -->
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Doors Downsell Modal -->
+    <!-- <div id="popup-overlay">
+      <div id="screen-flash"></div>
+
+      <style>
+        .md3 {
+          max-height: min-content !important;
+        }
+      </style>
+
+      <div id="popup-card" class="md3">
+        <div class="headline">
+          <span class="wait-badge">Special Gift Inside</span>
+          <h1>Wait — Before You Go<br />Try Your Luck!</h1>
+          <p>Pick a Door below to claim your Discount!</p>
+        </div>
+
+        <div class="doors-platform">
+          <div class="doors-container">
+            <div class="door-wrapper" id="door-1" onclick="handleDoorClick(1)">
+              <div class="arrow-container">
+                <span class="pointing-arrow">▼</span>
+              </div>
+
+              <div class="door-back"></div>
+
+              <div class="door">
+                <div class="door-panel top"></div>
+                <div class="door-panel bottom"></div>
+                <div class="door-handle"></div>
+              </div>
+            </div>
+
+            <div class="door-wrapper" id="door-2" onclick="handleDoorClick(2)">
+              <div class="arrow-container">
+                <span class="pointing-arrow">▼</span>
+              </div>
+
+              <div class="door-back"></div>
+
+              <div class="door">
+                <div class="door-panel top"></div>
+                <div class="door-panel bottom"></div>
+                <div class="door-handle"></div>
+              </div>
+            </div>
+
+            <div class="door-wrapper" id="door-3" onclick="handleDoorClick(3)">
+              <div class="arrow-container">
+                <span class="pointing-arrow">▼</span>
+              </div>
+
+              <div class="door-back"></div>
+
+              <div class="door">
+                <div class="door-panel top"></div>
+                <div class="door-panel bottom"></div>
+                <div class="door-handle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        Configurações da oferta
+        <div id="discount-reveal" style="display: none">
+          <h2 class="congrats-title">CONGRATULATIONS!</h2>
+
+          <p
+            id="offer-text"
+            style="
+              font-weight: 800;
+              color: #000;
+              font-size: 18px;
+              margin-bottom: 15px;
+              display: block;
+            "
+          >
+            Now only, you can get 9 Bottles for just $171, <br />
+            the Lowest Price Ever!
+          </p>
+
+          <div class="product-box">
+            <div class="glory-glow"></div>
+
+            <img
+              decoding="async"
+              id="offer-image"
+              src="assets/img/6.webp"
+              class="product-image"
+              alt="Product offer"
+            />
+
+            <div class="shipping-badge">Free Shipping Included</div>
+            <style>
+              #popup-card .benefit-item svg * {
+                fill: #1e8449;
+              }
+            </style>
+            <div class="benefits-list">
+              <div class="benefit-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span>60 Day Satisfaction Guarantee</span>
+              </div>
+
+              <div class="benefit-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span>Including priority in monthly raffles</span>
+              </div>
+
+              <div class="benefit-item">
+                <svg fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span>Priority on all your orders!</span>
+              </div>
+            </div>
+
+            <div id="offer-price" class="price-only">Only $19/Bottle</div>
+            <div id="offer-save" class="save-amount">Save $1440 Instantly!</div>
+
+            <a
+              id="offer-link"
+              style="margin-bottom: 16px"
+              href="modaloffer-yes"
+              class="cta-button"
+            >
+              CLAIM MY DISCOUNT NOW
+            </a>
+
+            <a
+              href="modaloffer-no"
+              id="downsell-trigger"
+              class="no-thanks"
+            >
+              No Thanks, I don't want this exclusive gift
+            </a>
+          </div>
+        </div>
+
+        Downsell Offer (6 Bottles)
+        <div id="downsell-reveal" style="display: none">
+          <h2 class="downsell-title">Attention: You can't miss this!</h2>
+
+          <p class="downsell-text">
+            Today only, you have been chosen to receive
+            <strong>6 Bottles for just $114 a 90% discount</strong> off the
+            original price of <strong>Firm Flow</strong>.
+          </p>
+
+          <div class="downsell-content">
+            <div class="downsell-left">
+              <img
+                decoding="async"
+                src="assets/img/3.webp"
+                class="downsell-image"
+                alt="6 Bottles"
+              />
+
+              <div class="downsell-shipping-badge">FREE SHIPPING INCLUDED</div>
+
+              <div class="downsell-benefits">
+                <div class="downsell-benefit-item">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="4" fill="#5cb85c" />
+                    <path
+                      d="M10 16.4l-4-4 1.4-1.4 2.6 2.6 6.6-6.6 1.4 1.4-8 8z"
+                      fill="#fff"
+                    />
+                  </svg>
+                  <span>60 Day Satisfaction Guarantee</span>
+                </div>
+                <div class="downsell-benefit-item">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="4" fill="#5cb85c" />
+                    <path
+                      d="M10 16.4l-4-4 1.4-1.4 2.6 2.6 6.6-6.6 1.4 1.4-8 8z"
+                      fill="#fff"
+                    />
+                  </svg>
+                  <span>Including priority in monthly raffles</span>
+                </div>
+                <div class="downsell-benefit-item">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="24" height="24" rx="4" fill="#5cb85c" />
+                    <path
+                      d="M10 16.4l-4-4 1.4-1.4 2.6 2.6 6.6-6.6 1.4 1.4-8 8z"
+                      fill="#fff"
+                    />
+                  </svg>
+                  <span>Priority on all your orders!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="downsell-right">
+              <div class="downsell-price">Only $19/ Bottle</div>
+              <div class="downsell-save">Save $960!</div>
+
+              <a
+                href="modaloffer2-yes"
+                id="downsell-link"
+                class="downsell-cta"
+                >YES! Upgrade My Order</a
+              >
+
+              <a
+                href="modaloffer2-no"
+                class="downsell-no-thanks"
+              >
+                No Thanks, I prefer not to take<br />this offer right now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <script>
+      function getQueryParams() {
+        return new URLSearchParams(window.location.search);
+      }
+
+      // Função para combinar os parâmetros do href original com os parâmetros da URL atual
+      function combineParams(originalHref, currentParams) {
+        let [baseUrl, originalParamsString] = originalHref.split("?");
+        let originalParams = new URLSearchParams(originalParamsString || "");
+
+        // Adiciona os parâmetros atuais da URL aos parâmetros originais
+        currentParams.forEach((value, key) => {
+          // Verifica se o parâmetro já existe para evitar duplicação
+          if (!originalParams.has(key)) {
+            originalParams.append(key, value);
+          }
+        });
+
+        // Monta a URL final
+        let finalParamsString = originalParams.toString();
+        return finalParamsString ? `${baseUrl}?${finalParamsString}` : baseUrl;
+      }
+
+      // Adiciona os parâmetros da URL aos links de checkout
+      document.addEventListener("DOMContentLoaded", function () {
+        let buttons = document.querySelectorAll(".card a, winner-state a");
+        let currentParams = getQueryParams();
+
+        buttons.forEach(function (button) {
+          let originalHref = button.getAttribute("href");
+          button.setAttribute(
+            "href",
+            combineParams(originalHref, currentParams),
+          );
+        });
+      });
+      document.addEventListener("DOMContentLoaded", () => {
+        const timerElement = document.querySelector(".timer .time");
+        if (!timerElement) return;
+
+        let duration = 7 * 60 + 23; // 7 minutes and 23 seconds in total
+
+        const updateDisplay = () => {
+          const minutes = Math.floor(duration / 60);
+          const seconds = duration % 60;
+
+          const formattedMinutes = String(minutes).padStart(2, "0");
+          const formattedSeconds = String(seconds).padStart(2, "0");
+
+          timerElement.textContent = `${formattedMinutes}:${formattedSeconds}`;
+        };
+
+        updateDisplay();
+
+        const countdown = setInterval(() => {
+          if (duration <= 0) {
+            clearInterval(countdown);
+            timerElement.textContent = "00:00"; // Remain zeroed
+            return;
+          }
+
+          duration--;
+          updateDisplay();
+        }, 1000);
+      });
+
+      // Doors Modal Logic
+      document.addEventListener("DOMContentLoaded", () => {
+        const trigger = document.getElementById("no-thanks-trigger");
+        const modal = document.getElementById("popup-overlay");
+        const card = document.getElementById("popup-card");
+        const doors = document.querySelectorAll(".door-wrapper");
+        const claimBtn = document.getElementById("offer-link");
+        const headline = document.querySelector(".headline");
+        const doorsPlatform = document.querySelector(".doors-platform");
+        const discountReveal = document.getElementById("discount-reveal");
+
+        let attempts = 0;
+
+        if (trigger && modal) {
+          trigger.addEventListener("click", (e) => {
+            e.preventDefault();
+            modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+          });
+        }
+
+        function triggerCelebrate(x, y) {
+          const flash = document.getElementById("screen-flash");
+          if (flash) {
+            flash.classList.add("flash-animate");
+            setTimeout(() => {
+              flash.classList.remove("flash-animate");
+            }, 600);
+          }
+
+          const colors = [
+            "#f1c40f",
+            "#2ecc71",
+            "#3498db",
+            "#e74c3c",
+            "#9b59b6",
+          ];
+          const emojis = ["🎉", "💰", "✨", "🎁", "💎"];
+
+          function createPiece(startX, startY, isEmoji = false) {
+            const el = document.createElement("div");
+            el.className = isEmoji ? "float-emoji" : "confetti";
+
+            if (isEmoji) {
+              el.textContent =
+                emojis[Math.floor(Math.random() * emojis.length)];
+            } else {
+              el.style.backgroundColor =
+                colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            const rect = modal.getBoundingClientRect();
+            el.style.left = startX - rect.left + "px";
+            el.style.top = startY - rect.top + "px";
+
+            const angle = Math.random() * Math.PI * 2;
+            const vel =
+              Math.random() * (isEmoji ? 10 : 15) + (isEmoji ? 5 : 10);
+
+            let vx = Math.cos(angle) * vel;
+            let vy = Math.sin(angle) * vel - (isEmoji ? 10 : 15);
+
+            if (!isEmoji) {
+              el.style.width = Math.random() * 10 + 6 + "px";
+              el.style.height = el.style.width;
+            }
+
+            modal.appendChild(el);
+
+            let px = startX - rect.left;
+            let py = startY - rect.top;
+
+            const anim = () => {
+              px += vx;
+              py += vy;
+
+              vy += isEmoji ? -0.1 : 0.5;
+
+              el.style.left = px + "px";
+              el.style.top = py + "px";
+
+              if (!isEmoji) {
+                el.style.transform = `rotate(${px}deg)`;
+              }
+
+              if (py < rect.height + 100 && py > -400) {
+                requestAnimationFrame(anim);
+              } else {
+                el.remove();
+              }
+            };
+            requestAnimationFrame(anim);
+          }
+
+          for (let i = 0; i < 110; i++) {
+            createPiece(x, y);
+          }
+
+          for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+              createPiece(x, y, true);
+            }, i * 100);
+          }
+        }
+
+        // Pass parameters to the claim button
+        let currentParams = getQueryParams();
+        if (claimBtn) {
+          let originalHref = claimBtn.getAttribute("href");
+          claimBtn.setAttribute(
+            "href",
+            combineParams(originalHref, currentParams),
+          );
+        }
+
+        // Optional: close button logic if exists
+        const closeBtn = document.querySelector(".close-btn");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", () => {
+            modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+          });
+        }
+
+        doors.forEach((door) => {
+          door.addEventListener("click", function (e) {
+            if (
+              this.classList.contains("opened") ||
+              this.classList.contains("disabled")
+            )
+              return;
+
+            attempts++;
+            this.classList.add("opened");
+
+            if (attempts === 1) {
+              this.classList.add("loss-door");
+              const back = this.querySelector(".door-back");
+              if (back) {
+                back.innerHTML =
+                  '<div class="block-symbol">🎁</div><div class="loss-msg">BONYS TRY: PICK ANOTHER</div>';
+              }
+              this.classList.add("disabled");
+
+              // Shake effect on error
+              card.classList.add("error-state", "shake", "permitir-shake");
+              setTimeout(() => {
+                card.classList.remove("error-state", "shake", "permitir-shake");
+              }, 600);
+            } else if (attempts === 2) {
+              doors.forEach((d) => d.classList.add("disabled"));
+              const back = this.querySelector(".door-back");
+              if (back) {
+                back.innerHTML =
+                  '<div class="block-symbol">🎉</div><div class="loss-msg" style="color: #27ae60;">50% OFF</div>';
+              }
+
+              setTimeout(() => {
+                triggerCelebrate(
+                  e.clientX || window.innerWidth / 2,
+                  e.clientY || window.innerHeight / 2,
+                );
+                card.classList.add("winner-state");
+                headline.style.display = "none";
+                doorsPlatform.style.display = "none";
+                discountReveal.style.display = "block";
+              }, 1200);
+            }
+          });
+        });
+      });
+
+      // Downsell logic: clicking No Thanks on discount-reveal shows downsell
+      document.addEventListener("DOMContentLoaded", () => {
+        const downsellTrigger = document.getElementById("downsell-trigger");
+        const discountReveal = document.getElementById("discount-reveal");
+        const downsellReveal = document.getElementById("downsell-reveal");
+        const popupCard = document.getElementById("popup-card");
+
+        if (downsellTrigger && discountReveal && downsellReveal) {
+          downsellTrigger.addEventListener("click", (e) => {
+            e.preventDefault();
+            discountReveal.style.display = "none";
+            downsellReveal.style.display = "block";
+            popupCard.classList.remove("winner-state");
+            popupCard.classList.add("downsell-state");
+            popupCard.scrollTop = 0;
+          });
+        }
+      });
+    </script>
+    <script>
+      (function () {
+        var el = document.getElementById("countdown-timer");
+        if (!el) return;
+        var total = 5 * 60;
+        function tick() {
+          var m = Math.floor(total / 60);
+          var s = total % 60;
+          el.textContent =
+            (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+          if (total > 0) {
+            total--;
+            setTimeout(tick, 1000);
+          }
+        }
+        tick();
+      })();
+    </script>
+
+    <script>
+      var delaySeconds = 522;
+      var player = document.querySelector("vturb-smartplayer");
+
+      player.addEventListener("player:ready", function () {
+        player.displayHiddenElements(delaySeconds, ["[data-delay]"], {
+          display: "grid",
+          persist: true,
+        });
+      });
+    </script>
+  </body>
+</html>
